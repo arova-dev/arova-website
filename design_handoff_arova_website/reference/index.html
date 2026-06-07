@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AROVA — Excellence in Construction</title>
+<link rel="stylesheet" href="assets/arova-tokens.css" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+
+  body {
+    background: var(--bg-navy);
+    color: var(--fg-on-navy);
+    font-family: var(--font-display);
+    min-height: 100svh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Full-bleed stage: subtle vertical navy depth + faint blueprint grid */
+  .stage {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    background:
+      linear-gradient(180deg, var(--arova-navy-900) 0%, var(--arova-navy-800) 62%, var(--arova-navy-900) 100%);
+    overflow: hidden;
+  }
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 42%, #000 35%, transparent 78%);
+            mask-image: radial-gradient(ellipse 90% 70% at 50% 42%, #000 35%, transparent 78%);
+    pointer-events: none;
+  }
+  /* a single bright hairline of cyan way up top — like a site rule */
+  .stage::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--arova-cyan-400);
+    opacity: 0.9;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(48px, 9vh, 120px) 24px clamp(32px, 5vh, 64px);
+    z-index: 1;
+  }
+
+  .wordmark {
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0.84;
+    font-size: clamp(5.5rem, 27vw, 23rem);
+    letter-spacing: -0.015em;
+    color: var(--fg-on-navy);
+    margin: 0;
+    display: block;
+    /* tiny optical lift so the cap sits dead centre */
+    margin-left: -0.02em;
+  }
+  .wordmark .stop {
+    color: var(--arova-cyan-400);
+  }
+
+  /* tagline tracked wide, sitting under the wordmark like a lockup */
+  .tagline {
+    margin-top: clamp(14px, 2.4vh, 30px);
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--fg-on-navy);
+    letter-spacing: var(--tracking-tagline);
+    font-size: clamp(0.62rem, 1.9vw, 1.35rem);
+    /* indent compensates for the trailing tracking so it stays centred */
+    text-indent: var(--tracking-tagline);
+    white-space: nowrap;
+  }
+
+  /* ---- FLOW NAV ---- */
+  .flow {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0;
+    border-top: 1px solid var(--border-navy);
+    background: rgba(14, 18, 38, 0.35);
+    backdrop-filter: blur(6px);
+  }
+
+  .flow__item {
+    flex: 1 1 0;
+    min-width: 200px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: clamp(22px, 3.4vh, 34px) clamp(20px, 3vw, 44px);
+    text-decoration: none;
+    color: var(--fg-on-navy);
+    border-left: 1px solid var(--border-navy);
+    transition: background var(--dur-base) var(--ease-standard);
+    overflow: hidden;
+  }
+  .flow__item:first-child { border-left: 0; }
+
+  /* cyan wipe that fills from the bottom on hover */
+  .flow__item::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 3px;
+    background: var(--arova-cyan-400);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+  .flow__item:hover { background: var(--arova-navy-700); }
+  .flow__item:hover::before { transform: scaleX(1); }
+  .flow__item:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--arova-cyan-400);
+  }
+
+  /* Contact = solid cyan action panel */
+  .flow__item--cta { background: var(--arova-cyan-500); border-left-color: var(--arova-cyan-500); }
+  .flow__item--cta::before { display: none; }
+  .flow__item--cta .flow__num { color: rgba(255,255,255,0.7); }
+  .flow__item--cta .flow__label { color: var(--arova-white); }
+  .flow__item--cta .flow__arrow { color: rgba(255,255,255,0.85); }
+  .flow__item--cta:hover { background: var(--arova-cyan-400); }
+  .flow__item--cta:hover .flow__arrow { color: var(--arova-white); transform: translateX(4px); }
+  .flow__item--cta:focus-visible { box-shadow: inset 0 0 0 2px var(--arova-white); }
+
+  .flow__num {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: var(--fs-13);
+    color: var(--arova-cyan-400);
+    letter-spacing: 0;
+    line-height: 1;
+    flex: 0 0 auto;
+  }
+  .flow__label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: clamp(1.15rem, 1.7vw, 1.6rem);
+    line-height: 1;
+  }
+  .flow__arrow {
+    margin-left: auto;
+    color: var(--fg-on-navy-3);
+    flex: 0 0 auto;
+    transition: transform var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard);
+  }
+  .flow__item:hover .flow__arrow {
+    color: var(--arova-cyan-400);
+    transform: translateX(4px);
+  }
+
+  /* ---- entrance animation ----
+     Visible IS the base state. We only animate *from* hidden, and only
+     when motion is welcome — so screenshots, print and reduced-motion
+     always show content. */
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes rise {
+      from { transform: translateY(26px); }
+      to   { transform: none; }
+    }
+    .anim { animation: rise 700ms var(--ease-out) both; }
+    .wordmark { animation-delay: 60ms; }
+    .tagline  { animation-delay: 260ms; }
+    .flow     { animation-delay: 420ms; }
+  }
+
+  @media (max-width: 720px) {
+    .flow__item { flex: 1 1 100%; min-width: 0; border-left: 0; border-top: 1px solid var(--border-navy); }
+    .flow__item:first-child { border-top: 0; }
+    .tagline { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+  <main class="stage" id="stage" data-screen-label="AROVA Home">
+    <section class="hero">
+      <h1 class="wordmark anim">Arova<span class="stop">.</span></h1>
+      <p class="tagline anim">Excellence in Construction</p>
+    </section>
+
+    <nav class="flow anim" aria-label="Primary">
+      <a class="flow__item" href="who-we-are.html">
+        <span class="flow__num">01</span>
+        <span class="flow__label">Who we are</span>
+        <span class="flow__arrow" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+      <a class="flow__item" href="what-we-do.html">
+        <span class="flow__num">02</span>
+        <span class="flow__label">What we do</span>
+        <span class="flow__arrow" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+      <a class="flow__item" href="where-we-do-it.html">
+        <span class="flow__num">03</span>
+        <span class="flow__label">Where we do it</span>
+        <span class="flow__arrow" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+      <a class="flow__item flow__item--cta" href="contact.html">
+        <span class="flow__num">04</span>
+        <span class="flow__label">Contact</span>
+        <span class="flow__arrow" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+    </nav>
+  </main>
+
+  <template id="__bundler_thumbnail" data-bg-color="#151B3D">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <rect width="100" height="100" fill="#151B3D"/>
+      <text x="50" y="56" font-family="Arial Narrow, sans-serif" font-weight="bold" font-size="30" fill="#fff" text-anchor="middle">A<tspan fill="#2FBFF5">.</tspan></text>
+    </svg>
+  </template>
+</body>
+</html>

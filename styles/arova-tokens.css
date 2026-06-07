@@ -1,0 +1,286 @@
+/* =====================================================================
+   Arova Design System — Core tokens
+   "Excellence in Construction"
+
+   Copied VERBATIM from the design handoff (design_handoff_arova_website/
+   reference/assets/arova-tokens.css). The ONLY change from the original:
+   the Google-Fonts @import is removed and the three --font-* stacks now
+   point at the CSS variables provided by next/font (see app/layout.tsx).
+   This is the swap the handoff README explicitly recommends ("In Next,
+   prefer next/font/google"). All colours, type scale, spacing, radii,
+   shadows and motion values are untouched — do not invent values.
+   ===================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------
+     COLOR — Brand
+     ------------------------------------------------------------------ */
+  /* Primary brand navy — taken from the logo background. Deep, confident,
+     used for primary surfaces, header bars, footers, and hero blocks. */
+  --arova-navy-900: #151B3D;   /* deepest — primary brand background */
+  --arova-navy-800: #1E2650;   /* header/footer surfaces */
+  --arova-navy-700: #2A3468;   /* elevated navy surfaces, hover */
+  --arova-navy-600: #3A4682;   /* borders on navy, muted accents */
+
+  /* Cyan — the electric blue of the trefoil mark. Used SPARINGLY as an
+     accent: CTAs, key stats, active states, brand highlights. Never as
+     large fills except on icon chips or data viz. */
+  --arova-cyan-600: #0891D1;   /* pressed / deeper accent */
+  --arova-cyan-500: #16A6E8;   /* primary accent */
+  --arova-cyan-400: #2FBFF5;   /* default cyan (logo mid-tone) */
+  --arova-cyan-300: #5FD2FF;   /* hover highlight */
+  --arova-cyan-200: #A9E6FF;   /* tints, chips, subtle backgrounds */
+  --arova-cyan-100: #E2F5FD;   /* very soft wash */
+
+  /* ------------------------------------------------------------------
+     COLOR — Neutrals (warm cool grays, lean slightly blue)
+     ------------------------------------------------------------------ */
+  --arova-ink-900: #0E1226;    /* near-black, text on white */
+  --arova-ink-800: #232842;
+  --arova-ink-700: #3B4160;
+  --arova-ink-600: #5A6183;
+  --arova-ink-500: #7B83A6;
+  --arova-ink-400: #A5ABC4;
+  --arova-ink-300: #CCD0DF;
+  --arova-ink-200: #E3E6EF;
+  --arova-ink-100: #F1F3F8;
+  --arova-ink-50:  #F7F9FC;
+  --arova-white:   #FFFFFF;
+
+  /* ------------------------------------------------------------------
+     COLOR — Semantic (status / project-management context)
+     Construction projects track: on-track / delayed / blocked / done
+     ------------------------------------------------------------------ */
+  --arova-success: #1F8A5A;    /* on track, complete */
+  --arova-success-bg: #E4F5EC;
+  --arova-warning: #C68A0E;    /* delayed, attention */
+  --arova-warning-bg: #FDF3DE;
+  --arova-danger:  #C0392B;    /* blocked, overdue */
+  --arova-danger-bg: #FBE7E4;
+  --arova-info:    var(--arova-cyan-500);
+  --arova-info-bg: var(--arova-cyan-100);
+
+  /* ------------------------------------------------------------------
+     COLOR — Semantic roles
+     ------------------------------------------------------------------ */
+  --fg-1: var(--arova-ink-900);          /* primary text */
+  --fg-2: var(--arova-ink-700);          /* secondary text */
+  --fg-3: var(--arova-ink-500);          /* tertiary / captions */
+  --fg-muted: var(--arova-ink-400);
+  --fg-on-navy: var(--arova-white);
+  --fg-on-navy-2: rgba(255,255,255,0.72);
+  --fg-on-navy-3: rgba(255,255,255,0.50);
+  --fg-accent: var(--arova-cyan-500);
+
+  --bg-1: var(--arova-white);            /* primary surface */
+  --bg-2: var(--arova-ink-50);           /* subtle page bg */
+  --bg-3: var(--arova-ink-100);          /* muted panel */
+  --bg-navy: var(--arova-navy-900);      /* branded dark surface */
+  --bg-navy-elev: var(--arova-navy-800);
+
+  --border-1: var(--arova-ink-200);      /* default border */
+  --border-2: var(--arova-ink-300);      /* stronger border */
+  --border-navy: var(--arova-navy-600);
+  --border-focus: var(--arova-cyan-500);
+
+  /* ------------------------------------------------------------------
+     TYPE — Font stacks
+     Families are loaded + self-hosted by next/font (app/layout.tsx),
+     which exposes each as a CSS variable. Fallbacks preserved verbatim.
+     ------------------------------------------------------------------ */
+  --font-display: var(--font-barlow-condensed), 'Barlow Condensed', 'Oswald', 'Impact', sans-serif;
+  --font-body:    var(--font-inter-tight), 'Inter Tight', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:    var(--font-jetbrains-mono), 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+
+  /* ------------------------------------------------------------------
+     TYPE — Scale
+     Rhythm: 4px base, modular scale ~1.25
+     ------------------------------------------------------------------ */
+  --fs-12: 0.75rem;
+  --fs-13: 0.8125rem;
+  --fs-14: 0.875rem;
+  --fs-15: 0.9375rem;
+  --fs-16: 1rem;
+  --fs-18: 1.125rem;
+  --fs-20: 1.25rem;
+  --fs-24: 1.5rem;
+  --fs-30: 1.875rem;
+  --fs-36: 2.25rem;
+  --fs-48: 3rem;
+  --fs-60: 3.75rem;
+  --fs-72: 4.5rem;
+  --fs-96: 6rem;
+
+  /* Line heights */
+  --lh-tight: 1.05;
+  --lh-snug:  1.2;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.7;
+
+  /* Letter spacing — the brand uses noticeable positive tracking on
+     display caps and tagline.  */
+  --tracking-tagline: 0.22em;    /* "EXCELLENCE IN CONSTRUCTION" feel */
+  --tracking-eyebrow: 0.14em;
+  --tracking-button:  0.06em;
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0;
+
+  /* ------------------------------------------------------------------
+     SPACING — 4px base
+     ------------------------------------------------------------------ */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+  --sp-32: 128px;
+
+  /* ------------------------------------------------------------------
+     RADIUS — restrained, architectural
+     ------------------------------------------------------------------ */
+  --r-0: 0;
+  --r-1: 2px;
+  --r-2: 4px;
+  --r-3: 6px;
+  --r-4: 10px;
+  --r-5: 14px;
+  --r-full: 999px;
+
+  /* ------------------------------------------------------------------
+     SHADOWS — crisp, low-opacity, cool-toned
+     ------------------------------------------------------------------ */
+  --shadow-xs: 0 1px 2px rgba(21, 27, 61, 0.06);
+  --shadow-sm: 0 2px 6px rgba(21, 27, 61, 0.06), 0 1px 2px rgba(21, 27, 61, 0.04);
+  --shadow-md: 0 6px 16px rgba(21, 27, 61, 0.08), 0 2px 4px rgba(21, 27, 61, 0.04);
+  --shadow-lg: 0 16px 40px rgba(21, 27, 61, 0.12), 0 4px 12px rgba(21, 27, 61, 0.06);
+  --shadow-xl: 0 32px 64px rgba(21, 27, 61, 0.18);
+  --shadow-inset: inset 0 1px 0 rgba(255,255,255,0.06);
+  --shadow-glow-cyan: 0 0 0 4px rgba(47, 191, 245, 0.18);
+
+  /* ------------------------------------------------------------------
+     MOTION
+     ------------------------------------------------------------------ */
+  --ease-standard: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 320ms;
+}
+
+/* =====================================================================
+   SEMANTIC TYPE STYLES
+   Use these classes directly on elements; they encode the brand voice.
+   ===================================================================== */
+
+.t-wordmark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-48);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.t-tagline {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-14);
+  letter-spacing: var(--tracking-tagline);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.t-eyebrow {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+
+.t-h1, h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(var(--fs-48), 6vw, var(--fs-72));
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-1);
+  margin: 0;
+}
+
+.t-h2, h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-48);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-1);
+  margin: 0;
+}
+
+.t-h3, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-30);
+  line-height: var(--lh-snug);
+  letter-spacing: 0;
+  color: var(--fg-1);
+  margin: 0;
+}
+
+.t-h4, h4 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-20);
+  line-height: var(--lh-snug);
+  color: var(--fg-1);
+  margin: 0;
+}
+
+.t-body, p {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--fs-16);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-2);
+  margin: 0;
+}
+
+.t-body-lg {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--fs-18);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-2);
+}
+
+.t-caption {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-13);
+  line-height: var(--lh-normal);
+  color: var(--fg-3);
+}
+
+.t-mono, code, kbd {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.92em;
+  letter-spacing: -0.01em;
+}
+
+.t-number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}

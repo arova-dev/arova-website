@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AROVA — Excellence in Construction</title>
+<link rel="stylesheet" href="assets/arova-tokens.css" />
+<link rel="stylesheet" href="assets/arova-site.css" />
+<style>
+  /* ---- HOME STATEMENT (single-file build) ---- */
+  body { overflow-x: hidden; }
+
+  .stage {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, var(--arova-navy-900) 0%, var(--arova-navy-800) 62%, var(--arova-navy-900) 100%);
+    overflow: hidden;
+  }
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 42%, #000 35%, transparent 78%);
+            mask-image: radial-gradient(ellipse 90% 70% at 50% 42%, #000 35%, transparent 78%);
+    pointer-events: none;
+  }
+  .stage::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--arova-cyan-400);
+    opacity: 0.9;
+  }
+
+  .hero {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(48px, 9vh, 120px) 24px clamp(32px, 5vh, 64px);
+    z-index: 1;
+  }
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0.84;
+    font-size: clamp(5.5rem, 27vw, 23rem);
+    letter-spacing: -0.015em;
+    color: var(--fg-on-navy);
+    margin: 0 0 0 -0.02em;
+    display: block;
+  }
+  .wordmark .stop { color: var(--arova-cyan-400); }
+  .tagline {
+    margin-top: clamp(14px, 2.4vh, 30px);
+    font-family: var(--font-display);
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--fg-on-navy);
+    letter-spacing: var(--tracking-tagline);
+    font-size: clamp(0.62rem, 1.9vw, 1.35rem);
+    text-indent: var(--tracking-tagline);
+    white-space: nowrap;
+  }
+
+  .flow {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0;
+    border-top: 1px solid var(--border-navy);
+    background: rgba(14, 18, 38, 0.35);
+    backdrop-filter: blur(6px);
+  }
+  .flow__item {
+    flex: 1 1 0;
+    min-width: 200px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: clamp(22px, 3.4vh, 34px) clamp(20px, 3vw, 44px);
+    text-decoration: none;
+    color: var(--fg-on-navy);
+    border-left: 1px solid var(--border-navy);
+    transition: background var(--dur-base) var(--ease-standard);
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .flow__item:first-child { border-left: 0; }
+  .flow__item::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 3px;
+    background: var(--arova-cyan-400);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+  .flow__item:hover { background: var(--arova-navy-700); }
+  .flow__item:hover::before { transform: scaleX(1); }
+  .flow__item:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--arova-cyan-400); }
+
+  .flow__item--cta { background: var(--arova-cyan-500); border-left-color: var(--arova-cyan-500); }
+  .flow__item--cta::before { display: none; }
+  .flow__item--cta .flow__num { color: rgba(255,255,255,0.7); }
+  .flow__item--cta .flow__label { color: var(--arova-white); }
+  .flow__item--cta .flow__arrow { color: rgba(255,255,255,0.85); }
+  .flow__item--cta:hover { background: var(--arova-cyan-400); }
+  .flow__item--cta:hover .flow__arrow { color: var(--arova-white); transform: translateX(4px); }
+  .flow__item--cta:focus-visible { box-shadow: inset 0 0 0 2px var(--arova-white); }
+
+  .flow__num { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-13); color: var(--arova-cyan-400); line-height: 1; flex: 0 0 auto; }
+  .flow__label { font-family: var(--font-display); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; font-size: clamp(1.15rem, 1.7vw, 1.6rem); line-height: 1; }
+  .flow__arrow { margin-left: auto; color: var(--fg-on-navy-3); flex: 0 0 auto; transition: transform var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard); }
+  .flow__item:hover .flow__arrow { color: var(--arova-cyan-400); transform: translateX(4px); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .wordmark { animation: rise 700ms var(--ease-out) both; animation-delay: 60ms; }
+    .tagline  { animation: rise 700ms var(--ease-out) both; animation-delay: 260ms; }
+    .flow     { animation: rise 700ms var(--ease-out) both; animation-delay: 420ms; }
+  }
+
+  @media (max-width: 720px) {
+    .flow__item { flex: 1 1 100%; min-width: 0; border-left: 0; border-top: 1px solid var(--border-navy); }
+    .flow__item:first-child { border-top: 0; }
+    .tagline { white-space: normal; }
+  }
+
+  /* ---- single-file router chrome ---- */
+  body.is-home [data-chrome] { display: none; }
+  body:not(.is-home) .bp-grid { display: block; }
+  .bar__link { cursor: pointer; }
+</style>
+</head>
+<body>
+  <!-- shared background + top bar (hidden on home) -->
+  <div class="bp-grid" data-chrome></div>
+  <header class="bar" data-chrome>
+    <div class="bar__inner">
+      <a class="bar__brand" href="#home">Arova<span class="stop">.</span></a>
+      <nav class="bar__nav" aria-label="Primary">
+        <a class="bar__link" href="#who" data-nav="who">Who we are</a>
+        <a class="bar__link" href="#what" data-nav="what">What we do</a>
+        <a class="bar__link" href="#where" data-nav="where">Where we do it</a>
+        <a class="btn-cyan" href="#contact" data-nav="contact">Contact
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HOME ============ -->
+  <main class="stage" data-view="home" data-screen-label="AROVA Home">
+    <section class="hero">
+      <h1 class="wordmark">Arova<span class="stop">.</span></h1>
+      <p class="tagline">Excellence in Construction</p>
+    </section>
+    <nav class="flow" aria-label="Primary">
+      <a class="flow__item" href="#who">
+        <span class="flow__num">01</span><span class="flow__label">Who we are</span>
+        <span class="flow__arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="flow__item" href="#what">
+        <span class="flow__num">02</span><span class="flow__label">What we do</span>
+        <span class="flow__arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="flow__item" href="#where">
+        <span class="flow__num">03</span><span class="flow__label">Where we do it</span>
+        <span class="flow__arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="flow__item flow__item--cta" href="#contact">
+        <span class="flow__num">04</span><span class="flow__label">Contact</span>
+        <span class="flow__arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </nav>
+  </main>
+
+  <!-- ============ WHO WE ARE ============ -->
+  <div class="shell" data-view="who" data-screen-label="Who we are" hidden>
+    <main class="page wrap">
+      <div class="eyebrow anim d1">01 <span class="lbl">Who we are</span></div>
+      <h1 class="page-title anim d1">A young company.<br>Not young builders<span class="stop">.</span></h1>
+      <p class="lead anim d2">
+        The founding team carries <strong>over six decades of combined experience</strong> on high-end
+        residential projects — now rooted in North Devon and building with local trades we have known for years.
+      </p>
+      <div class="pillars">
+        <div class="pillar anim d2">
+          <div class="pillar__num">01</div>
+          <div class="pillar__k">Craft</div>
+          <div class="pillar__t">Detail that shows up at handover, and ten years later.</div>
+          <div class="pillar__d">Hand-finished joinery, honest materials, no visible compromises. Every junction drawn before it is built.</div>
+        </div>
+        <div class="pillar anim d3">
+          <div class="pillar__num">02</div>
+          <div class="pillar__k">Communication</div>
+          <div class="pillar__t">Weekly walkthroughs. Daily photo log. Reply within hours.</div>
+          <div class="pillar__d">You are never more than 24 hours from knowing what we know. Every slip, every change, every choice — flagged as it happens.</div>
+        </div>
+        <div class="pillar anim d4">
+          <div class="pillar__num">03</div>
+          <div class="pillar__k">Certainty</div>
+          <div class="pillar__t">Fixed-price contract. Dates you can plan around.</div>
+          <div class="pillar__d">The handover date you sign for is the date we deliver. We price risk properly so you do not have to absorb it later.</div>
+        </div>
+      </div>
+      <div class="stat-row anim d4">
+        <div class="stat"><div class="stat__num">60<span class="u">+</span></div><div class="stat__label">Years of combined experience</div></div>
+        <div class="stat"><div class="stat__num">12&ndash;24<span class="u">mo</span></div><div class="stat__label">Typical build duration</div></div>
+        <div class="stat"><div class="stat__num">&pound;1&ndash;8<span class="u">m</span></div><div class="stat__label">Project value range</div></div>
+        <div class="stat"><div class="stat__num">100<span class="u">%</span></div><div class="stat__label">Fixed-price contracts</div></div>
+      </div>
+    </main>
+    <footer class="foot">
+      <div class="wrap foot__inner">
+        <span class="foot__brand">Arova<span class="stop">.</span></span>
+        <nav class="foot__links" aria-label="Footer">
+          <a href="#who">Who we are</a><a href="#what">What we do</a><a href="#where">Where we do it</a><a href="#contact">Contact</a>
+        </nav>
+        <span class="foot__meta">Barnstaple &middot; North Devon</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ============ WHAT WE DO ============ -->
+  <div class="shell" data-view="what" data-screen-label="What we do" hidden>
+    <main class="page wrap">
+      <div class="eyebrow anim d1">02 <span class="lbl">What we do</span></div>
+      <h1 class="page-title anim d1">High-end homes.<br>Delivered to the brief<span class="stop">.</span></h1>
+      <p class="lead anim d2">
+        We design and build bespoke new-build family homes. <strong>A year or more, start to finish</strong> —
+        run on the same eight phases, every time. The calm comes from the repetition.
+      </p>
+      <div class="phases">
+        <div class="phase anim d2"><div class="phase__num">01</div><div><div class="phase__name">Brief &amp; feasibility</div><div class="phase__desc">Weeks spent listening to you, walking the site, and pressure-testing the ambition against planning, budget and programme.</div></div><div class="phase__dur">6&ndash;8 wks</div></div>
+        <div class="phase anim d2"><div class="phase__num">02</div><div><div class="phase__name">Architecture &amp; design</div><div class="phase__desc">Architect-led concept through technical design. Every junction drawn. Material samples on the table before decisions are made.</div></div><div class="phase__dur">4&ndash;6 mo</div></div>
+        <div class="phase anim d3"><div class="phase__num">03</div><div><div class="phase__name">Planning &amp; pre-construction</div><div class="phase__desc">Planning submission, neighbour consultation, party wall, building control. Long-lead items ordered the week contracts are signed.</div></div><div class="phase__dur">3&ndash;5 mo</div></div>
+        <div class="phase anim d3"><div class="phase__num">04</div><div><div class="phase__name">Enabling works &amp; shell</div><div class="phase__desc">Demolition, dig, foundations, frame, envelope. Weatherproof and watertight before winter, always.</div></div><div class="phase__dur">4&ndash;6 mo</div></div>
+        <div class="phase anim d3"><div class="phase__num">05</div><div><div class="phase__name">First &amp; second fix</div><div class="phase__desc">Services, plaster, joinery, stone, tiling. This is where the brief becomes the house. Weekly walkthrough, daily photo log.</div></div><div class="phase__dur">5&ndash;7 mo</div></div>
+        <div class="phase anim d4"><div class="phase__num">06</div><div><div class="phase__name">Finishes &amp; commissioning</div><div class="phase__desc">Decoration, landscaping, final furnishings. Every system tested, every setting dialled in before you see it.</div></div><div class="phase__dur">6&ndash;8 wks</div></div>
+        <div class="phase anim d4"><div class="phase__num">07</div><div><div class="phase__name">Snagging &amp; handover</div><div class="phase__desc">Your punch list, not ours. We stay until every item is closed or explicitly waived. Keys, manuals, walkthrough.</div></div><div class="phase__dur">2&ndash;4 wks</div></div>
+        <div class="phase anim d4"><div class="phase__num">08</div><div><div class="phase__name">Aftercare</div><div class="phase__desc">Twenty-four-month defects liability. A direct line to the site manager who built the house — not a call centre.</div></div><div class="phase__dur">24 mo</div></div>
+      </div>
+    </main>
+    <footer class="foot">
+      <div class="wrap foot__inner">
+        <span class="foot__brand">Arova<span class="stop">.</span></span>
+        <nav class="foot__links" aria-label="Footer">
+          <a href="#who">Who we are</a><a href="#what">What we do</a><a href="#where">Where we do it</a><a href="#contact">Contact</a>
+        </nav>
+        <span class="foot__meta">Barnstaple &middot; North Devon</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ============ WHERE WE DO IT ============ -->
+  <div class="shell" data-view="where" data-screen-label="Where we do it" hidden>
+    <main class="page wrap">
+      <div class="eyebrow anim d1">03 <span class="lbl">Where we do it</span></div>
+      <h1 class="page-title anim d1">Devon &amp;<br>Cornwall<span class="stop">.</span></h1>
+      <p class="lead anim d2">
+        Based in <strong>Barnstaple</strong>, building the length of the South West — from the North Devon
+        coast and the edge of Exmoor, down through the moors to the Cornish coast. Local trades, local knowledge, every site within reach.
+      </p>
+      <div class="coverage anim d2">
+        <div class="coverage__k">Areas we build</div>
+        <div class="chips">
+          <span class="chip chip--base">North Devon</span>
+          <span class="chip">Exmoor</span>
+          <span class="chip">Mid &amp; South Devon</span>
+          <span class="chip">North Cornwall</span>
+          <span class="chip">The Cornish coast</span>
+        </div>
+      </div>
+      <div class="subhead anim d3">
+        <div class="subhead__t">Selected homes</div>
+        <div class="subhead__n">5 of 60+ delivered</div>
+      </div>
+      <div class="locs">
+        <a class="loc anim d2" href="#contact"><div><div class="loc__code">EX34</div><div class="loc__place">Woolacombe</div></div><div class="loc__name">Morte Point House</div><div class="loc__meta"><span>486 m&sup2;</span><span>18 mo</span></div></a>
+        <a class="loc anim d2" href="#contact"><div><div class="loc__code">EX32</div><div class="loc__place">Barnstaple</div></div><div class="loc__name">Willow House</div><div class="loc__meta"><span>312 m&sup2;</span><span>14 mo</span></div></a>
+        <a class="loc anim d3" href="#contact"><div><div class="loc__code">EX33</div><div class="loc__place">Croyde</div></div><div class="loc__name">Downend</div><div class="loc__meta"><span>248 m&sup2;</span><span>16 mo</span></div></a>
+        <a class="loc anim d3" href="#contact"><div><div class="loc__code">EX31</div><div class="loc__place">Exmoor edge</div></div><div class="loc__name">Fieldgate</div><div class="loc__meta"><span>540 m&sup2;</span><span>22 mo</span></div></a>
+        <a class="loc anim d4" href="#contact"><div><div class="loc__code">EX39</div><div class="loc__place">Bideford</div></div><div class="loc__name">Broadlands</div><div class="loc__meta"><span>286 m&sup2;</span><span>13 mo</span></div></a>
+      </div>
+    </main>
+    <footer class="foot">
+      <div class="wrap foot__inner">
+        <span class="foot__brand">Arova<span class="stop">.</span></span>
+        <nav class="foot__links" aria-label="Footer">
+          <a href="#who">Who we are</a><a href="#what">What we do</a><a href="#where">Where we do it</a><a href="#contact">Contact</a>
+        </nav>
+        <span class="foot__meta">Barnstaple &middot; North Devon</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ============ CONTACT ============ -->
+  <div class="shell" data-view="contact" data-screen-label="Contact" hidden>
+    <main class="page wrap">
+      <div class="eyebrow anim d1">04 <span class="lbl">Contact</span></div>
+      <h1 class="page-title anim d1">Send us the brief<span class="stop">.</span></h1>
+      <p class="lead anim d2">
+        We take on a small number of projects each year. Tell us about the site, the ambition and the
+        timeline — <strong>we reply within two working days</strong>. If we are not the right fit, we will say so, and point you to someone who is.
+      </p>
+      <div class="contact-grid">
+        <div>
+          <a class="btn-cyan lg anim d2" href="mailto:hello@arova.net?subject=New%20project%20enquiry&amp;body=A%20few%20lines%20about%20the%20site%2C%20the%20ambition%20and%20the%20timeline%3A%0A%0A">
+            Email the studio
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <div class="contact-card anim d3"><div class="contact-card__k">Email</div><a class="contact-card__v" href="mailto:hello@arova.net">hello@arova.net</a></div>
+          <div class="contact-card anim d3"><div class="contact-card__k">Call</div><a class="contact-card__v" href="tel:+447802373796">+44 (0)7802 373 796</a></div>
+        </div>
+        <div>
+          <div class="contact-card anim d4"><div class="contact-card__k">Studio</div><div class="contact-card__v">Barnstaple, North&nbsp;Devon</div><div class="contact-card__sub">Unit 1a, Onyx Business Park,<br>Enterprise Road, Barnstaple,<br>Devon EX31 3ZD</div></div>
+          <div class="contact-card anim d5"><div class="contact-card__k">Hours</div><div class="contact-card__v">Mon&ndash;Fri</div><div class="contact-card__sub">Site visits by arrangement, across the region.</div></div>
+        </div>
+      </div>
+    </main>
+    <footer class="foot">
+      <div class="wrap foot__inner">
+        <span class="foot__brand">Arova<span class="stop">.</span></span>
+        <nav class="foot__links" aria-label="Footer">
+          <a href="#who">Who we are</a><a href="#what">What we do</a><a href="#where">Where we do it</a><a href="#contact">Contact</a>
+        </nav>
+        <span class="foot__meta">&copy; 2026 Arova Ltd &middot; 12847291</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var ALIASES = { '': 'home', 'home': 'home', 'who': 'who', 'what': 'what', 'where': 'where', 'contact': 'contact' };
+      var views = document.querySelectorAll('[data-view]');
+      var navLinks = document.querySelectorAll('[data-nav]');
+
+      function setView(v) {
+        if (!ALIASES.hasOwnProperty(v)) v = 'home';
+        v = ALIASES[v];
+        views.forEach(function (el) { el.hidden = (el.getAttribute('data-view') !== v); });
+        document.body.classList.toggle('is-home', v === 'home');
+        navLinks.forEach(function (a) {
+          if (a.getAttribute('data-nav') === v) { a.setAttribute('aria-current', 'page'); }
+          else { a.removeAttribute('aria-current'); }
+        });
+        window.scrollTo(0, 0);
+      }
+
+      function route() { setView((location.hash || '').replace('#', '')); }
+      window.addEventListener('hashchange', route);
+      route();
+    })();
+  </script>
+
+  <template id="__bundler_thumbnail" data-bg-color="#151B3D">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <rect width="100" height="100" fill="#151B3D"/>
+      <text x="50" y="56" font-family="Arial Narrow, sans-serif" font-weight="bold" font-size="30" fill="#fff" text-anchor="middle">A<tspan fill="#2FBFF5">.</tspan></text>
+    </svg>
+  </template>
+</body>
+</html>
