@@ -46,7 +46,7 @@ export default function WhoWeArePage() {
     <PageShell>
       <Eyebrow num="01" label="Who we are" />
       <h1 className="page-title anim d1">
-        A young company.
+        A young company<span className="stop">.</span>
         <br />
         Not young builders<span className="stop">.</span>
       </h1>
