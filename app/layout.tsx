@@ -47,10 +47,6 @@ export const metadata: Metadata = {
     locale: "en_GB",
     type: "website",
   },
-  // ⚠ INTERNAL PREVIEW ONLY — keeps search engines from indexing the site
-  // while it's shared for feedback. REMOVE this `robots` block (or set
-  // index: true) when the site is ready to go public.
-  robots: { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
