@@ -9,92 +9,116 @@
 //     Keep the comma after the closing } .
 //   • To remove a project, delete its whole { ... } block (and its comma).
 //   • Keep every field that is already filled in — don't delete the labels
-//     on the left (slug, postcode, place, ...), only change the text values.
+//     on the left (slug, status, postcode, ...), only change the values.
 //
 //  The "Where we do it" page builds itself from this list:
-//   • the rows you see are these projects, in this order;
-//   • the "N of 60+ delivered" counter counts how many are listed here;
-//   • so adding or removing a block is all it takes — no layout editing.
+//   • the case studies you see are these projects, in this order;
+//   • the "N projects" counter counts how many are listed here.
+//   So adding or removing a block is all it takes — no layout editing.
 //
-//  ⚠  PLACEHOLDER DATA — the five projects below are FICTIONAL examples
-//     carried over from old marketing material. Replace them with real
-//     case studies before the site goes live, and confirm every figure
-//     (names, postcodes, square-metres, durations) with the team first.
-//     Do not publish these as if they were real, completed homes.
-//
-//  NOTE: project rows are not yet clickable. Individual case-study pages
-//  (/projects/...) are a planned next step, to be added once there are
-//  real stories and photographs. The optional fields lower down (summary,
-//  year, heroImage, ...) are there ready for that — leave them out for now.
+//  PHOTOS: each project shows two photos. Put image files in the
+//  `public/projects/` folder, then reference them as "/projects/your-file.jpg".
+//  Keep photos roughly portrait (taller than wide) for the side-by-side
+//  "duo" layout, or use the "stack" layout for captioned before/after shots.
 // =====================================================================
 
-export type Project = {
-  slug: string; // a short url-friendly id, lowercase-with-dashes, e.g. "morte-point-house"
-  postcode: string; // shown in cyan, e.g. "EX34"
-  place: string; // the town / area, e.g. "Woolacombe"
-  name: string; // the project name (shown big), e.g. "Morte Point House"
-  area: string; // floor area, e.g. "486 m²"
-  duration: string; // build time, e.g. "18 mo"
-  region: string; // must match one of the region names in regions.ts
+// A project is one of three states. This sets the little status chip:
+//   "done" → Completed       (solid dot)
+//   "live" → In progress     (pulsing dot)
+//   "pre"  → Preconstruction (hollow dot)
+export type ProjectStatus = "done" | "live" | "pre";
 
-  // --- Optional, for the richer case-study page later (safe to omit) ---
-  summary?: string; // a 1–2 sentence intro in Arova's voice
-  year?: string; // e.g. "2024"
-  heroImage?: string; // path to the main photo once real photography exists
-  gallery?: string[]; // paths to more photos
-  stats?: { label: string; value: string }[]; // e.g. { label: "Bedrooms", value: "5" }
+// One photo. `caption` is only used by the "stack" layout (before/after shots).
+export type ProjectImage = {
+  src: string; // e.g. "/projects/riversvale-exterior.jpg"
+  alt: string; // a plain description of the photo, for accessibility
+  caption?: { label: string; meta: string }; // e.g. { label: "Site cleared", meta: "Mar 2026" }
 };
 
-// ⚠ PLACEHOLDER — replace with real case studies.
+export type Project = {
+  slug: string; // short url-friendly id, e.g. "riversvale-villa"
+  status: ProjectStatus; // "done" | "live" | "pre" (see above)
+  statusLabel: string; // the words on the status chip, e.g. "Completed"
+  postcode: string; // e.g. "EX31"  (shown in cyan)
+  place: string; // e.g. "Barnstaple"
+  name: string; // the project name, shown big
+  area: string; // floor area, e.g. "700 m²"
+  duration: string; // build time, e.g. "24 weeks"
+  description: string; // a one-line summary in Arova's voice
+  layout: "duo" | "stack"; // "duo" = two photos side by side; "stack" = two captioned photos stacked
+  images: ProjectImage[]; // exactly two photos
+};
+
 export const projects: Project[] = [
   {
-    slug: "morte-point-house",
-    postcode: "EX34",
-    place: "Woolacombe",
-    name: "Morte Point House",
-    area: "486 m²",
-    duration: "18 mo",
-    region: "North Devon",
-  },
-  {
-    slug: "willow-house",
-    postcode: "EX32",
-    place: "Barnstaple",
-    name: "Willow House",
-    area: "312 m²",
-    duration: "14 mo",
-    region: "North Devon",
-  },
-  {
-    slug: "downend",
-    postcode: "EX33",
-    place: "Croyde",
-    name: "Downend",
-    area: "248 m²",
-    duration: "16 mo",
-    region: "North Devon",
-  },
-  {
-    slug: "fieldgate",
+    slug: "riversvale-villa",
+    status: "done",
+    statusLabel: "Completed",
     postcode: "EX31",
-    place: "Exmoor edge",
-    name: "Fieldgate",
-    area: "540 m²",
-    duration: "22 mo",
-    region: "Exmoor",
+    place: "Barnstaple",
+    name: "Riversvale Villa",
+    area: "700 m²",
+    duration: "24 weeks",
+    description:
+      "Heritage renovation of an old villa into six bright, airy apartments.",
+    layout: "duo",
+    images: [
+      {
+        src: "/projects/riversvale-exterior.jpg",
+        alt: "Riversvale Villa — restored villa exterior with wrought-iron balconies under a blue sky",
+      },
+      {
+        src: "/projects/riversvale-stairwell.jpg",
+        alt: "Riversvale Villa — ornate plasterwork stairwell with a stained-glass window and runner",
+      },
+    ],
   },
   {
-    slug: "broadlands",
-    postcode: "EX39",
-    place: "Bideford",
-    name: "Broadlands",
-    area: "286 m²",
-    duration: "13 mo",
-    region: "North Devon",
+    slug: "mansard",
+    status: "live",
+    statusLabel: "In progress",
+    postcode: "EX33",
+    place: "Putsborough",
+    name: "Mansard",
+    area: "100 m²",
+    duration: "12 weeks",
+    description:
+      "Renovation of an apartment above the garages — cedar shingle roof, leadwork and a full internal refit.",
+    layout: "duo",
+    images: [
+      {
+        src: "/projects/mansard-external.jpg",
+        alt: "Mansard — garage block with a new hand-laid cedar shingle mansard roof",
+      },
+      {
+        src: "/projects/mansard-roof.jpg",
+        alt: "Mansard — close detail of the cedar shingle roofing and ridge",
+      },
+    ],
+  },
+  {
+    slug: "marisco",
+    status: "pre",
+    statusLabel: "Preconstruction",
+    postcode: "EX33",
+    place: "Saunton",
+    name: "Marisco",
+    area: "980 m²",
+    duration: "83 weeks",
+    description:
+      "A magnificent cliff-top family home. Demolition complete; preconstruction under way.",
+    layout: "stack",
+    images: [
+      {
+        src: "/projects/marisco-demolished.jpg",
+        alt: "Marisco — cliff-top site cleared above the beach at Saunton, ready for construction",
+        caption: { label: "Site cleared", meta: "Mar 2026" },
+      },
+      {
+        src: "/projects/marisco-cgi.jpg",
+        alt: "Marisco — CGI of the approved contemporary timber-and-stone house stepped into the hillside",
+        caption: { label: "The approved design", meta: "CGI" },
+      },
+    ],
   },
 ];
-
-// The total Arova claims to have delivered (the "of 60+ delivered" figure).
-// The list above is the "selected homes" we choose to show; this is the
-// running total across the whole company. Update it as the real number grows.
-export const totalDelivered = "60+";

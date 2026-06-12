@@ -28,9 +28,9 @@ const pillars = [
   {
     num: "03",
     keyword: "Certainty",
-    claim: "Fixed-price contract. Dates you can plan around.",
+    claim: "Fixed price or cost-plus. Dates and numbers you can plan around.",
     detail:
-      "The handover date you sign for is the date we deliver. We price risk properly so you do not have to absorb it later.",
+      "The handover date you sign for is the date we deliver, and every pound is accounted for along the way. We price risk properly so you do not absorb it later.",
   },
 ];
 
@@ -38,7 +38,7 @@ const stats = [
   { num: "60", unit: "+", label: "Years of combined experience" },
   { num: "12–24", unit: "mo", label: "Typical build duration" },
   { num: "£1–8", unit: "m", label: "Project value range" },
-  { num: "100", unit: "%", label: "Fixed-price contracts" },
+  { num: "100", unit: "%", label: "Costs priced and tracked, line by line" },
 ];
 
 export default function WhoWeArePage() {

@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import Eyebrow from "@/components/Eyebrow";
-import { projects, totalDelivered } from "@/content/projects";
+import { projects } from "@/content/projects";
 import { regions } from "@/content/regions";
 
 export const metadata: Metadata = {
   title: "Where we do it",
   description:
-    "Based in Barnstaple, building the length of the South West — from the North Devon coast and the edge of Exmoor down to the Cornish coast.",
+    "Rooted in North Devon and building across all of Devon and Cornwall — local trades, local knowledge, and a team on site within the hour.",
 };
 
-// Spread the row entrance animation: rows 1–2 use d2, 3–4 d3, the rest d4.
+// Spread the row entrance animation: first two rows use d3, the rest d4.
 function rowDelay(i: number) {
-  return `d${Math.min(4, 2 + Math.floor(i / 2))}`;
+  return `d${Math.min(4, 3 + Math.floor(i / 2))}`;
 }
 
 export default function WhereWeDoItPage() {
@@ -25,10 +25,9 @@ export default function WhereWeDoItPage() {
         Cornwall<span className="stop">.</span>
       </h1>
       <p className="lead anim d2">
-        Based in <strong>Barnstaple</strong>, building the length of the South
-        West — from the North Devon coast and the edge of Exmoor, down through
-        the moors to the Cornish coast. Local trades, local knowledge, every
-        site within reach.
+        Rooted in <strong>North Devon</strong> and building across{" "}
+        <strong>all of Devon and Cornwall</strong> — local trades, local
+        knowledge, and a team on site within the hour.
       </p>
 
       {/* Coverage chips — built from content/regions.ts */}
@@ -46,29 +45,50 @@ export default function WhereWeDoItPage() {
         </div>
       </div>
 
-      {/* The count on the right is derived from the project list, not typed by hand */}
+      {/* The count is derived from the project list, not typed by hand */}
       <div className="subhead anim d3">
-        <div className="subhead__t">Selected homes</div>
-        <div className="subhead__n">
-          {projects.length} of {totalDelivered} delivered
-        </div>
+        <div className="subhead__t">Selected work</div>
+        <div className="subhead__n">{projects.length} projects</div>
       </div>
 
-      {/* Project rows — built from content/projects.ts. Not clickable yet:
-          individual case-study pages are a planned next step. */}
-      <div className="locs">
+      {/* Case studies — photo-led rows, built from content/projects.ts */}
+      <div className="case-rows">
         {projects.map((project, i) => (
-          <div key={project.slug} className={`loc anim ${rowDelay(i)}`}>
-            <div>
-              <div className="loc__code">{project.postcode}</div>
-              <div className="loc__place">{project.place}</div>
+          <article key={project.slug} className={`case-row anim ${rowDelay(i)}`}>
+            <div className={`case-row__media case-row__media--${project.layout}`}>
+              {project.layout === "stack"
+                ? project.images.map((img) => (
+                    <figure className="shot" key={img.src}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={img.src} alt={img.alt} loading="lazy" />
+                      {img.caption && (
+                        <figcaption className="shot__cap">
+                          <b>{img.caption.label}</b> · {img.caption.meta}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ))
+                : project.images.map((img) => (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img key={img.src} src={img.src} alt={img.alt} loading="lazy" />
+                  ))}
             </div>
-            <div className="loc__name">{project.name}</div>
-            <div className="loc__meta">
-              <span>{project.area}</span>
-              <span>{project.duration}</span>
+            <div className="case-row__body">
+              <div className={`case__status status status--${project.status}`}>
+                <span className="status__dot" />
+                {project.statusLabel}
+              </div>
+              <div className="case__loc">
+                {project.postcode} · {project.place}
+              </div>
+              <h3 className="case__name">{project.name}</h3>
+              <div className="case__meta">
+                <span>{project.area}</span>
+                <span>{project.duration}</span>
+              </div>
+              <p className="case__desc">{project.description}</p>
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </PageShell>
