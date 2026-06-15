@@ -19,10 +19,17 @@ export const site = {
 
   // How to reach the studio.
   email: "hello@arova.net",
-  // The phone number a human dials (with spaces, for readability)...
-  phoneDisplay: "+44 (0)7802 373 796",
-  // ...and the same number with no spaces, for the tap-to-call link.
-  phoneHref: "+447802373796",
+
+  // The team's phone numbers, shown on the Contact page in this order.
+  //   display = how the number looks on the page (spaces/dashes are fine)
+  //   href    = the SAME number with digits only (no spaces, dashes or brackets),
+  //             used for the tap-to-call link
+  //   name    = whose phone it is
+  phones: [
+    { name: "Alan", display: "+44 (0)7802-373796", href: "+447802373796" },
+    { name: "Neil", display: "+44 (0)7590-383938", href: "+447590383938" },
+    { name: "Ollie", display: "+44 (0)7429-205202", href: "+447429205202" },
+  ],
 
   // The studio address (each line shown on its own row on the Contact page).
   address: {

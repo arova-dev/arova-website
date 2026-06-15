@@ -52,9 +52,16 @@ export default function ContactPage() {
 
           <div className="contact-card anim d3">
             <div className="contact-card__k">Call</div>
-            <a className="contact-card__v" href={`tel:${site.phoneHref}`}>
-              {site.phoneDisplay}
-            </a>
+            <ul className="call-list">
+              {site.phones.map((phone) => (
+                <li className="call-list__item" key={phone.href}>
+                  <a className="contact-card__v" href={`tel:${phone.href}`}>
+                    {phone.display}
+                  </a>
+                  <span className="call-list__name">{phone.name}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 

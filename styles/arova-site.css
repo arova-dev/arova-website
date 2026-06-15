@@ -476,6 +476,12 @@ a { color: inherit; }
 a.contact-card__v:hover { color: var(--arova-cyan-400); }
 .contact-card__sub { font-family: var(--font-body); font-size: var(--fs-16); line-height: var(--lh-relaxed); color: var(--fg-on-navy-3); margin-top: 12px; }
 
+/* list of named phone numbers in the Call card */
+.call-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+.call-list__item { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.call-list .contact-card__v { font-size: clamp(var(--fs-20), 2.4vw, var(--fs-30)); }
+.call-list__name { font-family: var(--font-mono); font-size: var(--fs-13); text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-on-navy-3); }
+
 /* coverage strip — areas served */
 .coverage { margin-top: clamp(32px, 5vh, 52px); }
 .coverage__k {
